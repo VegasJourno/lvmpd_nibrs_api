@@ -1,0 +1,39 @@
+name: Scrape
+# Controls when the action will run.
+on:
+  schedule:
+    - cron:  '47 14 * * *' #UTC Time, represents 7:47 am Pacific
+  workflow_dispatch:
+    
+jobs: 
+  autoscrape:
+    runs-on: [windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
+      
+      - name: Install Packages
+        run: |
+          install.packages(c("tidyverse", "httr", "rjson", "janitor", "mailR", "googledrive"), type = "win.binary")
+        shell: Rscript {0}
+      
+      - name: Run scraper
+        env: 
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+          GMAIL_RECIPIENT: ${{ secrets.GMAIL_RECIPIENT }}
+          DRIVE_JSON: ${{ secrets.DRIVE_JSON }}
+          DRIVE_FOLDER: ${{ secrets.DRIVE_FOLDER }}
+        run: Rscript lvmpd_nibrs_GITHUB.R
+      
+      - name: Add and commit	
+        run: |
+          git add .	
+          git config user.name "Automated"	
+          git config user.email "actions@users.noreply.github.com"	
+          git commit -m "Latest data" 	
+      - name: Push	
+        run: git push
