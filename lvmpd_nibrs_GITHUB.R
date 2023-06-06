@@ -76,7 +76,7 @@ lvmpd_nibrs_main <- lvmpd_nibrs_main %>%
 
 #Drop the objectid columns
 lvmpd_nibrs_main <- lvmpd_nibrs_main %>% 
-  select(-updated_date, date_dif)
+  select(-c(updated_date, date_dif))
 
 #Clean up certain column values
 lvmpd_nibrs_main <- lvmpd_nibrs_main %>% 
