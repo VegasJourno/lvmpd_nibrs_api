@@ -102,7 +102,7 @@ lvmpd_nibrs_main <- lvmpd_nibrs_main %>%
 lvmpd_nibrs_all_new <- rbind(lvmpd_nibrs_all,
                              lvmpd_nibrs_main) %>% 
   #Delete any repeat objects
-  distinct(object_id, .keep_all = TRUE)
+  distinct(objectid, .keep_all = TRUE)
 
 #Write new CSV for repository
 write.csv(lvmpd_nibrs_all_new, 
