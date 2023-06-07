@@ -6,6 +6,7 @@ library(rjson)
 library(httr)
 library(janitor)
 library(googledrive)
+library(mailR)
 
 ####
 ####
