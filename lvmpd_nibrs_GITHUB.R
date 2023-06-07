@@ -121,6 +121,8 @@ DRIVE_FOLDER <- Sys.getenv("DRIVE_FOLDER")
 googledrive::drive_auth(path = DRIVE_JSON)
 td <- drive_get(DRIVE_FOLDER)
 
+drive_rm("lvmpd_nibrs_all")
+
 drive_put(lvmpd_nibrs_all_path, 
           name =  "lvmpd_nibrs_all", 
           type = "spreadsheet", 
