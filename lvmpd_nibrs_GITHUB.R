@@ -12,6 +12,9 @@ library(mailR)
 ####
 ####
 
+#Turn off Scientific Notation
+options(scipen = 999)
+
 #Create master dataframe
 lvmpd_nibrs_main <- NULL
 
@@ -73,7 +76,11 @@ lvmpd_nibrs_main <- lvmpd_nibrs_main %>%
   mutate(reported_on = substr(reported_on, 1, 10)) %>% 
   #Convert into correct date
   mutate(reported_on = as.POSIXct(as.numeric(reported_on), 
-                                    origin="1970-01-01")) 
+                                    origin="1970-01-01")) %>% 
+  #Format to our timezone, includes daylight savings
+  mutate(reported_on = format(reported_on, tz="America/Los_Angeles",usetz=TRUE)) %>% 
+  mutate(reported_on = ymd_hms(reported_on)) %>% 
+  arrange(desc(reported_on))
 
 #Drop the objectid columns
 lvmpd_nibrs_main <- lvmpd_nibrs_main %>% 
