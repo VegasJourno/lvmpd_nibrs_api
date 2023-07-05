@@ -86,11 +86,6 @@ lvmpd_nibrs_main <- lvmpd_nibrs_main %>%
 lvmpd_nibrs_main <- lvmpd_nibrs_main %>% 
   select(-c(updated_date, date_dif))
 
-#Clean up certain column values
-lvmpd_nibrs_main <- lvmpd_nibrs_main %>% 
-  mutate(location = str_squish(toupper(location))) %>% 
-  mutate(csz = str_squish(toupper(csz)))
-
 ####
 ####
 ####
